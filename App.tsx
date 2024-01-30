@@ -1,17 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, TouchableOpacity, View } from 'react-native';
+import View from 'react-native-ui-lib/view';
+import Text from 'react-native-ui-lib/text';
+import { useState } from 'react';
+import { Button, ConnectionStatusBar } from 'react-native-ui-lib';
+import { SafeAreaView as SafeAreaContext } from 'react-native-safe-area-context';
+import { NoInternetConnectionScreen } from './src/screens/noInternetConnection';
 
-export default function App() {
+const App = () => {
+	const [isInternetConnection, setIsInternetConnection] =
+		useState<boolean>(false);
+
+	if (!isInternetConnection)
+		return (
+			<NoInternetConnectionScreen setConnection={setIsInternetConnection} />
+		);
+
 	return (
-		<View className="flex justify-center items-center flex-1">
-			<Text className="text-red-500 font-bold">Welcome!</Text>
-			<TouchableOpacity
-				onPress={() => console.log('test')}
-				className="bg-purple-600 px-5 py-2 rounded-lg text-white"
-			>
-				<Text>START</Text>
-			</TouchableOpacity>
-			<StatusBar style="auto" />
-		</View>
+		<SafeAreaContext className="flex flex-1 justify-center">
+			<View flex center className="flex justify-center items-center flex-1">
+				<ConnectionStatusBar
+					onConnectionChange={(isConnected) =>
+						setIsInternetConnection(isConnected)
+					}
+				/>
+				<Text text50>Welcome!</Text>
+				<Button
+					label="START"
+					className="rounded-2xl bg-purple-600"
+					onPress={() => console.log('test')}
+				/>
+				<StatusBar style="auto" hidden={true} />
+			</View>
+		</SafeAreaContext>
 	);
-}
+};
+
+export default App;
