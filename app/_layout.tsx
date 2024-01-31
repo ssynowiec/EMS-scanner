@@ -1,9 +1,6 @@
-import Text from 'react-native-ui-lib/text';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Slot } from 'expo-router';
 import { useState } from 'react';
+import { Drawer } from 'expo-router/drawer';
 import { NoInternetConnectionScreen } from '../src/screens/noInternetConnection';
-import { ConnectionStatusBar } from 'react-native-ui-lib';
 import { StatusBar } from 'expo-status-bar';
 
 const MainLayout = () => {
@@ -15,17 +12,32 @@ const MainLayout = () => {
 		);
 
 	return (
-		<SafeAreaView className="flex flex-1 justify-center items-center">
-			<ConnectionStatusBar
-				onConnectionChange={(isConnected) =>
-					setIsInternetConnection(isConnected)
-				}
-			/>
-			<Text>Header</Text>
-			<Slot />
-			<Text>Footer</Text>
+		<>
+			<Drawer>
+				<Drawer.Screen
+					name="index"
+					options={{
+						drawerLabel: 'Home',
+						title: 'Start',
+					}}
+				/>
+				<Drawer.Screen
+					name="welcome/index"
+					options={{
+						drawerLabel: 'Welcome',
+						title: 'Welcome',
+					}}
+				/>
+				<Drawer.Screen
+					name="scan/index"
+					options={{
+						drawerLabel: 'Scan',
+						title: 'Scan',
+					}}
+				/>
+			</Drawer>
 			<StatusBar style="auto" hidden={true} />
-		</SafeAreaView>
+		</>
 	);
 };
 
