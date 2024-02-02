@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { Drawer } from 'expo-router/drawer';
-import { NoInternetConnectionScreen } from '../src/screens/noInternetConnection';
-import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Drawer } from 'expo-router/drawer';
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import { ConnectionStatusBar } from 'react-native-ui-lib';
+
+import { NoInternetConnectionScreen } from '../src/screens/noInternetConnection';
 
 const queryClient = new QueryClient();
 
@@ -53,7 +54,7 @@ const MainLayout = () => {
 						}}
 					/>
 				</Drawer>
-				<StatusBar style="auto" hidden={true} />
+				<StatusBar style="auto" hidden />
 			</QueryClientProvider>
 		</>
 	);

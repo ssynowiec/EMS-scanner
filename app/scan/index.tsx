@@ -1,6 +1,6 @@
 import { View } from 'react-native';
-import Text from 'react-native-ui-lib/text';
 import { Button } from 'react-native-ui-lib';
+import Text from 'react-native-ui-lib/text';
 
 const ScanPage = () => {
 	return (

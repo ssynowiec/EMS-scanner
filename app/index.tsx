@@ -1,6 +1,6 @@
+import { Link } from '@react-navigation/native';
 import { View } from 'react-native';
 import Text from 'react-native-ui-lib/text';
-import { Link } from '@react-navigation/native';
 
 const WelcomeScreen = () => {
 	return (

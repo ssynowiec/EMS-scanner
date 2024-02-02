@@ -1,5 +1,5 @@
-import View from 'react-native-ui-lib/view';
 import Text from 'react-native-ui-lib/text';
+import View from 'react-native-ui-lib/view';
 
 const Welcome = () => {
 	return (

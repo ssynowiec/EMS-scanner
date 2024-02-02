@@ -1,8 +1,8 @@
-import { Text } from 'react-native';
-import React from 'react';
-import { ConnectionStatusBar } from 'react-native-ui-lib';
-import { SafeAreaView as SafeAreaContext } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { Text } from 'react-native';
+import { SafeAreaView as SafeAreaContext } from 'react-native-safe-area-context';
+import { ConnectionStatusBar } from 'react-native-ui-lib';
 
 interface NoInternetConnectionScreenProps {
 	setConnection: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,7 +17,7 @@ export const NoInternetConnectionScreen = ({
 				onConnectionChange={(isConnected) => setConnection(isConnected)}
 			/>
 			<Text>No Internet Connection</Text>
-			<StatusBar style="auto" hidden={true} />
+			<StatusBar style="auto" hidden />
 		</SafeAreaContext>
 	);
 };
