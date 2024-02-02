@@ -1,9 +1,10 @@
-import { ActivityIndicator, FlatList, View } from 'react-native';
-import Text from 'react-native-ui-lib/text';
 import { useQuery } from '@tanstack/react-query';
-import { TicketListItem } from '../../src/components/ticket/ticketListItem';
-import { TextField } from 'react-native-ui-lib';
 import { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, View } from 'react-native';
+import { TextField } from 'react-native-ui-lib';
+import Text from 'react-native-ui-lib/text';
+
+import { TicketListItem } from '../../src/components/ticket/ticketListItem';
 import { getAllTicketsByEvent } from '../../src/utils/getAllTicketsByEvent';
 
 const tickets = [
@@ -113,7 +114,7 @@ const TicketsPage = () => {
 	}, [searchText]);
 
 	return (
-		<View className="flex flex-1 justify-center px-4">
+		<View className="flex flex-1 justify-center px-4 bg-white">
 			{ticketsQuery.isLoading ? <ActivityIndicator /> : null}
 			{ticketsQuery.isError ? <Text>Error</Text> : null}
 			<TextField
