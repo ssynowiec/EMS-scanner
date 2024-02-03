@@ -122,7 +122,12 @@ const TicketsPage = () => {
 	}, [searchText]);
 
 	if (startCamera) {
-		return <CameraScreen setStartCamera={setStartCamera} fun={setSearchText} />;
+		return (
+			<CameraScreen
+				setStartCamera={setStartCamera}
+				onCodeScanned={setSearchText}
+			/>
+		);
 	}
 
 	return (

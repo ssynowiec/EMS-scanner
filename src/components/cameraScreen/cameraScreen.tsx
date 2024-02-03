@@ -1,7 +1,7 @@
 import { CameraView, useCameraPermissions } from 'expo-camera/next';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-export const CameraScreen = ({ setStartCamera, fun }) => {
+export const CameraScreen = ({ setStartCamera, onCodeScanned }) => {
 	const [permission, requestPermission] = useCameraPermissions();
 
 	if (!permission) requestPermission();
@@ -25,7 +25,7 @@ export const CameraScreen = ({ setStartCamera, fun }) => {
 					barCodeTypes: ['qr'],
 				}}
 				onBarcodeScanned={(event) => {
-					fun(event.data);
+					onCodeScanned(event.data);
 					setStartCamera(false);
 				}}
 			>
