@@ -30,12 +30,12 @@ export const CameraScreen = ({ setStartCamera, fun }) => {
 				}}
 			>
 				<CameraView />
-				<View className="flex h-full items-center">
+				<View className="flex h-full items-center flex-row justify-center">
 					<TouchableOpacity
 						onPress={() => setStartCamera(false)}
-						className="bg-purple-600 p-4 w-1/2 items-center justify-center text-white rounded-md"
+						className="bg-purple-600 p-4 w-1/2 items-center justify-center text-white rounded-md self-end mb-10"
 					>
-						<Text className="text-white">Close camera</Text>
+						<Text className="text-white">stop scanning</Text>
 					</TouchableOpacity>
 				</View>
 			</CameraView>
