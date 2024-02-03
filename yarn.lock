@@ -5394,6 +5394,7 @@ __metadata:
     eslint-config-universe: "npm:^12.0.0"
     eslint-plugin-react: "npm:^7.33.2"
     expo: "npm:~50.0.4"
+    expo-camera: "npm:~14.0.3"
     expo-constants: "npm:~15.4.5"
     expo-linking: "npm:~6.2.2"
     expo-network: "npm:~5.8.0"
@@ -6037,6 +6038,17 @@ __metadata:
     invariant: "npm:^2.2.4"
     md5-file: "npm:^3.2.3"
   checksum: 10c0/45fd52075e98a8813184727890ef9e992bd727684ca896ab097e4e380503fad62e8bb5a7f98b7fc78665764f54c84f6d889d2d1d913f769f1df7adf34f8965b2
+  languageName: node
+  linkType: hard
+
+"expo-camera@npm:~14.0.3":
+  version: 14.0.3
+  resolution: "expo-camera@npm:14.0.3"
+  dependencies:
+    invariant: "npm:^2.2.4"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/6e035146f1c703dfd109ba2c5a8f7889f681f37a5df8499d18da5df4173dcaf8d3f4e1b5ac2c69085c8bdc957cb9d439b8acf217293319f9fbe68dc1c92c03c9
   languageName: node
   linkType: hard
 
