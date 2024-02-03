@@ -1,8 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
-import { TextField } from 'react-native-ui-lib';
-import Text from 'react-native-ui-lib/text';
+import {
+	ActivityIndicator,
+	FlatList,
+	Text,
+	TextInput,
+	TouchableHighlight,
+	View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { TicketListItem } from '../../src/components/ticket/ticketListItem';
 import { getAllTicketsByEvent } from '../../src/utils/getAllTicketsByEvent';
@@ -117,12 +123,20 @@ const TicketsPage = () => {
 		<View className="flex flex-1 justify-center px-4 bg-white">
 			{ticketsQuery.isLoading ? <ActivityIndicator /> : null}
 			{ticketsQuery.isError ? <Text>Error</Text> : null}
-			<TextField
-				floatingPlaceholder
-				onChangeText={(value) => setSearchText(value)}
-				enableErrors
-				className="border rounded p-3 py-2 w-full"
-			/>
+
+			<View className="flex flex-row justify-between items-center w-full">
+				<TextInput
+					onChangeText={(value) => setSearchText(value)}
+					className="border rounded p-3 py-2 w-[90%]"
+				/>
+				<TouchableHighlight
+					onPress={() => console.log('test')}
+					className="w-10% p-2"
+				>
+					<Icon name="qrcode-scan" size={30} />
+				</TouchableHighlight>
+			</View>
+
 			{ticketsQuery.isSuccess ? (
 				<FlatList
 					// data={ticketsQuery.data}
