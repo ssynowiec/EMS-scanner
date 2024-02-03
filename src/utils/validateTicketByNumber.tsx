@@ -5,5 +5,11 @@ export const validateTicketByNumber = async (
 	const res = await fetch(
 		`${process.env.EXPO_PUBLIC_API_URL}ticket/validate/${eventID}/${ticketNo}`,
 	);
-	return await res.json();
+	const data = await res.json();
+
+	if (res.ok) {
+		return data;
+	}
+
+	throw new Error(data.message);
 };
