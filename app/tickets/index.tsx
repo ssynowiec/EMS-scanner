@@ -153,6 +153,8 @@ const TicketsPage = () => {
 					ListEmptyComponent={() => (
 						<Text className="font-bold">No tickets</Text>
 					)}
+					onRefresh={() => ticketsQuery.refetch()}
+					refreshing={ticketsQuery.isFetching}
 					className="flex flex-1 w-full"
 				/>
 			) : null}
