@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { CameraScreen } from '../../src/components/cameraScreen/cameraScreen';
 import { TicketListItem } from '../../src/components/ticket/ticketListItem';
 import { getAllTicketsByEvent } from '../../src/utils/getAllTicketsByEvent';
 
@@ -107,6 +108,7 @@ const TicketsPage = () => {
 
 	const [filteredData, setFilteredData] = useState(tickets);
 	const [searchText, setSearchText] = useState('');
+	const [startCamera, setStartCamera] = useState(false);
 
 	useEffect(() => {
 		if (searchText === '') {
@@ -119,6 +121,10 @@ const TicketsPage = () => {
 		setFilteredData(filtered);
 	}, [searchText]);
 
+	if (startCamera) {
+		return <CameraScreen setStartCamera={setStartCamera} fun={setSearchText} />;
+	}
+
 	return (
 		<View className="flex flex-1 justify-center px-4 bg-white">
 			{ticketsQuery.isLoading ? <ActivityIndicator /> : null}
@@ -128,9 +134,10 @@ const TicketsPage = () => {
 				<TextInput
 					onChangeText={(value) => setSearchText(value)}
 					className="border rounded p-3 py-2 w-[90%]"
+					value={searchText}
 				/>
 				<TouchableHighlight
-					onPress={() => console.log('test')}
+					onPress={() => setStartCamera(true)}
 					className="w-10% p-2"
 				>
 					<Icon name="qrcode-scan" size={30} />
