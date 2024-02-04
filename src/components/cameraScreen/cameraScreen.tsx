@@ -1,4 +1,7 @@
+import { Audio } from 'expo-av';
+import { Sound } from 'expo-av/build/Audio/Sound';
 import { CameraView, useCameraPermissions } from 'expo-camera/next';
+import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 export const CameraScreen = ({ setStartCamera, onCodeScanned }) => {
@@ -15,6 +18,23 @@ export const CameraScreen = ({ setStartCamera, onCodeScanned }) => {
 	// 			</Button>
 	// 		</View>
 	// 	);
+	const [sound, setSound] = useState<Sound>();
+
+	const playSound = async () => {
+		const { sound } = await Audio.Sound.createAsync(
+			require('../../../assets/beep.mp3'),
+		);
+		setSound(sound);
+		await sound.playAsync();
+	};
+
+	useEffect(() => {
+		return sound
+			? () => {
+					sound?.unloadAsync();
+				}
+			: undefined;
+	}, [sound]);
 
 	return (
 		<View className="flex flex-1 w-full">
@@ -25,6 +45,7 @@ export const CameraScreen = ({ setStartCamera, onCodeScanned }) => {
 					barCodeTypes: ['qr'],
 				}}
 				onBarcodeScanned={(event) => {
+					playSound();
 					onCodeScanned(event.data);
 					setStartCamera(false);
 				}}
