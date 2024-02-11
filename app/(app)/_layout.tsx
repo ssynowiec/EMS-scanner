@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Text } from 'react-native';
 import { ConnectionStatusBar } from 'react-native-ui-lib';
 
+import { CustomDrawerContent } from '../../src/components/customDrawerContent/customDrawerContent';
 import { useSession } from '../../src/contexts/auth/authContext';
 import { NoInternetConnectionScreen } from '../../src/screens/noInternetConnection';
 
@@ -33,7 +34,7 @@ const MainLayout = () => {
 						setIsInternetConnection(isConnected)
 					}
 				/>
-				<Drawer>
+				<Drawer drawerContent={(props) => <CustomDrawerContent {...props} />}>
 					<Drawer.Screen
 						name="index"
 						options={{
