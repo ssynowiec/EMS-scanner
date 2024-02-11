@@ -1,20 +1,29 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Redirect } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
+import { Text } from 'react-native';
 import { ConnectionStatusBar } from 'react-native-ui-lib';
 
-import { NoInternetConnectionScreen } from '../src/screens/noInternetConnection';
+import { useSession } from '../../src/contexts/auth/authContext';
+import { NoInternetConnectionScreen } from '../../src/screens/noInternetConnection';
 
 const queryClient = new QueryClient();
 
 const MainLayout = () => {
+	const { session, isLoading } = useSession();
+
 	const [isInternetConnection, setIsInternetConnection] = useState<boolean>();
 
 	if (!isInternetConnection)
 		return (
 			<NoInternetConnectionScreen setConnection={setIsInternetConnection} />
 		);
+
+	if (isLoading) return <Text>Loading...</Text>;
+
+	if (!session) return <Redirect href="/sign-in" />;
 
 	return (
 		<>
