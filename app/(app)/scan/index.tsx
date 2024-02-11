@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-ui-lib';
 
-import { CameraScreen } from '../../src/components/cameraScreen/cameraScreen';
-import { Modal } from '../../src/components/modal/modal';
-import { validateTicketByNumber } from '../../src/utils/validateTicketByNumber';
+import { CameraScreen } from '../../../src/components/cameraScreen/cameraScreen';
+import { Modal } from '../../../src/components/modal/modal';
+import { validateTicketByNumber } from '../../../src/utils/validateTicketByNumber';
 
 const ScanPage = () => {
 	const [startScanner, setStartScanner] = useState(false);

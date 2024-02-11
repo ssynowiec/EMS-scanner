@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { CameraScreen } from '../../src/components/cameraScreen/cameraScreen';
-import { TicketListItem } from '../../src/components/ticket/ticketListItem';
-import { getAllTicketsByEvent } from '../../src/utils/getAllTicketsByEvent';
+import { CameraScreen } from '../../../src/components/cameraScreen/cameraScreen';
+import { TicketListItem } from '../../../src/components/ticket/ticketListItem';
+import { getAllTicketsByEvent } from '../../../src/utils/getAllTicketsByEvent';
 
 const tickets = [
 	{
