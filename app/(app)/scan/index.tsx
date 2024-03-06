@@ -5,9 +5,12 @@ import { Button } from 'react-native-ui-lib';
 
 import { CameraScreen } from '../../../src/components/cameraScreen/cameraScreen';
 import { Modal } from '../../../src/components/modal/modal';
+import { useSession } from '../../../src/contexts/auth/authContext';
 import { validateTicketByNumber } from '../../../src/utils/validateTicketByNumber';
 
 const ScanPage = () => {
+	const { eventId } = useSession();
+
 	const [startScanner, setStartScanner] = useState(false);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [scannedTicket, setScannedTicket] = useState({});
@@ -15,10 +18,7 @@ const ScanPage = () => {
 	const onSuccessScanned = useMutation({
 		mutationFn: async (data: string) => {
 			setScannedTicket({ ticketNo: data });
-			const ticketData = await validateTicketByNumber(
-				'61772e63-4345-4e60-91c9-db7e1901e993',
-				data,
-			);
+			const ticketData = await validateTicketByNumber(eventId, data);
 			setScannedTicket((prevState) => ({ ...prevState, ...ticketData }));
 			setModalVisible(true);
 		},

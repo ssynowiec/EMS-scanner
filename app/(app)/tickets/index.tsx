@@ -12,107 +12,26 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { CameraScreen } from '../../../src/components/cameraScreen/cameraScreen';
 import { TicketListItem } from '../../../src/components/ticket/ticketListItem';
+import { useSession } from '../../../src/contexts/auth/authContext';
 import { getAllTicketsByEvent } from '../../../src/utils/getAllTicketsByEvent';
 
-const tickets = [
-	{
-		ticketNo: 'f1c5d7f9-4d3c-4f2a-8f9d-5d6a6c7d5b5f',
-		validated: false,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: null,
-	},
-	{
-		ticketNo: 'f1c5d7f9-4d3c-4f2a-8f9d-5d6a6c7d5b5g',
-		validated: false,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: null,
-	},
-	{
-		ticketNo: 'f1c5d7f9-4d3c-4f2a-8f9d-5d6a6c7d5b5h',
-		validated: false,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: null,
-	},
-	{
-		ticketNo: 'f1c5d7f9-4d3c-4f2a-8f9d-5d6a6c7d5b5f',
-		validated: false,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: null,
-	},
-	{
-		ticketNo: '123456-4d3c-4f2a-8f9d-5d6a6c7d5b5g',
-		validated: false,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: null,
-	},
-	{
-		ticketNo: 'f1c5d7f9-4d3c-4f2a-8f9d-5d6a6c7d5b5h',
-		validated: false,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: null,
-	},
-
-	{
-		ticketNo: 'f1c5d7f9-4d3c-4f2a-8f9d-5d6a6c7d5b5f',
-		validated: true,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: '2024-02-01T10:00:00.000Z',
-	},
-	{
-		ticketNo: 'f1c5d7f9-4d3c-4f2a-8f9d-5d6a6c7d5b5g',
-		validated: false,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: null,
-	},
-	{
-		ticketNo: 'f1c5d7f9-4d3c-4f2a-8f9d-5d6a6c7d5b5h',
-		validated: true,
-		eventId: '',
-		userId: '',
-		createdAt: '2024-01-31T18:24:59.000Z',
-		updatedAt: '2024-01-31T18:24:59.000Z',
-		validatedAt: '2024-02-01T11:00:00.000Z',
-	},
-];
 const TicketsPage = () => {
+	const { eventId } = useSession();
+
 	const ticketsQuery = useQuery({
 		queryKey: ['tickets'],
 		queryFn: async () => {
-			return await getAllTicketsByEvent('');
+			return await getAllTicketsByEvent(eventId);
 		},
 	});
 
-	const [filteredData, setFilteredData] = useState(tickets);
+	const [filteredData, setFilteredData] = useState(ticketsQuery.data);
 	const [searchText, setSearchText] = useState('');
 	const [startCamera, setStartCamera] = useState(false);
 
 	useEffect(() => {
 		if (searchText === '') {
-			setFilteredData(tickets);
+			setFilteredData(ticketsQuery.data);
 			return;
 		}
 		const filtered = filteredData.filter((ticket) => {
@@ -151,7 +70,6 @@ const TicketsPage = () => {
 
 			{ticketsQuery.isSuccess ? (
 				<FlatList
-					// data={ticketsQuery.data}
 					data={filteredData}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => <TicketListItem ticket={item} />}
