@@ -2,19 +2,28 @@ import { createContext, PropsWithChildren, useContext } from 'react';
 
 import { useStorageState } from './useStorageState';
 
+export interface LoginDataInterface {
+	login: string;
+}
+
+interface ScannerDataInterface extends LoginDataInterface {
+	eventId: string;
+}
+
 const AuthContext = createContext<{
-	signIn: () => void;
+	signIn: (data: ScannerDataInterface) => void;
 	signOut: () => void;
-	session?: string | null;
+	scannerName: string | null;
+	eventId: string | null;
 	isLoading: boolean;
 }>({
 	signIn: () => null,
 	signOut: () => null,
-	session: null,
+	scannerName: null,
+	eventId: null,
 	isLoading: false,
 });
 
-// This hook can be used to access the user info.
 export const useSession = () => {
 	const value = useContext(AuthContext);
 	if (process.env.NODE_ENV !== 'production') {
@@ -27,20 +36,24 @@ export const useSession = () => {
 };
 
 export const SessionProvider = (props: PropsWithChildren) => {
-	const [[isLoading, session], setSession] = useStorageState('session');
+	const [[isEventIdLoading, eventId], setEventId] = useStorageState('eventId');
+	const [[isScannerNameLoading, scannerName], setScannerName] =
+		useStorageState('scannerName');
 
 	return (
 		<AuthContext.Provider
 			value={{
-				signIn: () => {
-					// Perform sign-in logic here
-					setSession('xxx');
+				signIn: (data) => {
+					setScannerName(data.login);
+					setEventId(data.eventId);
 				},
 				signOut: () => {
-					setSession(null);
+					setEventId(null);
+					setScannerName(null);
 				},
-				session,
-				isLoading,
+				eventId,
+				scannerName,
+				isLoading: isEventIdLoading,
 			}}
 		>
 			{props.children}
