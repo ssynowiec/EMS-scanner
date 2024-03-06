@@ -6,11 +6,11 @@ import { CustomDrawerContent } from '../../src/components/customDrawerContent/cu
 import { useSession } from '../../src/contexts/auth/authContext';
 
 const MainLayout = () => {
-	const { session, isLoading } = useSession();
+	const { eventId, scannerName, isLoading } = useSession();
 
 	if (isLoading) return <Text>Loading...</Text>;
 
-	if (!session) return <Redirect href="/sign-in" />;
+	if (!eventId || !scannerName) return <Redirect href="/sign-in" />;
 
 	return (
 		<>
