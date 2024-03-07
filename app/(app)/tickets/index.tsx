@@ -1,5 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
 	ActivityIndicator,
 	FlatList,
@@ -10,35 +9,23 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { useFilteredTickets } from '../../../hooks/useFilteredTickets';
 import { CameraScreen } from '../../../src/components/cameraScreen/cameraScreen';
 import { TicketListItem } from '../../../src/components/ticket/ticketListItem';
-import { useSession } from '../../../src/contexts/auth/authContext';
-import { getAllTicketsByEvent } from '../../../src/utils/getAllTicketsByEvent';
 
 const TicketsPage = () => {
-	const { eventId } = useSession();
+	const [startCamera, setStartCamera] = useState(false);
 
 	const {
-		data: tickets,
 		isLoading,
 		isError,
 		isSuccess,
 		refetch,
 		isFetching,
-	} = useQuery({
-		queryKey: ['tickets'],
-		queryFn: async () => {
-			return await getAllTicketsByEvent(eventId);
-		},
-	});
-
-	const [searchText, setSearchText] = useState('');
-	const [startCamera, setStartCamera] = useState(false);
-
-	const filteredTickets = useMemo(() => {
-		if (!searchText) return tickets;
-		return tickets.filter((ticket) => ticket.ticketNo.includes(searchText));
-	}, [searchText, tickets]);
+		searchText,
+		setSearchText,
+		filteredTickets,
+	} = useFilteredTickets();
 
 	if (startCamera) {
 		return (
