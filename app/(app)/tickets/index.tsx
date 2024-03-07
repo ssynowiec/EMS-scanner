@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
 	ActivityIndicator,
 	FlatList,
@@ -18,27 +18,27 @@ import { getAllTicketsByEvent } from '../../../src/utils/getAllTicketsByEvent';
 const TicketsPage = () => {
 	const { eventId } = useSession();
 
-	const ticketsQuery = useQuery({
+	const {
+		data: tickets,
+		isLoading,
+		isError,
+		isSuccess,
+		refetch,
+		isFetching,
+	} = useQuery({
 		queryKey: ['tickets'],
 		queryFn: async () => {
 			return await getAllTicketsByEvent(eventId);
 		},
 	});
 
-	const [filteredData, setFilteredData] = useState(ticketsQuery.data);
 	const [searchText, setSearchText] = useState('');
 	const [startCamera, setStartCamera] = useState(false);
 
-	useEffect(() => {
-		if (searchText === '') {
-			setFilteredData(ticketsQuery.data);
-			return;
-		}
-		const filtered = filteredData.filter((ticket) => {
-			return ticket.ticketNo.includes(searchText);
-		});
-		setFilteredData(filtered);
-	}, [searchText]);
+	const filteredTickets = useMemo(() => {
+		if (!searchText) return tickets;
+		return tickets.filter((ticket) => ticket.ticketNo.includes(searchText));
+	}, [searchText, tickets]);
 
 	if (startCamera) {
 		return (
@@ -51,8 +51,8 @@ const TicketsPage = () => {
 
 	return (
 		<View className="flex flex-1 justify-center px-4 bg-white">
-			{ticketsQuery.isLoading ? <ActivityIndicator /> : null}
-			{ticketsQuery.isError ? <Text>Error</Text> : null}
+			{isLoading ? <ActivityIndicator /> : null}
+			{isError ? <Text>Error</Text> : null}
 
 			<View className="flex flex-row justify-between items-center w-full">
 				<TextInput
@@ -68,16 +68,16 @@ const TicketsPage = () => {
 				</TouchableHighlight>
 			</View>
 
-			{ticketsQuery.isSuccess ? (
+			{isSuccess ? (
 				<FlatList
-					data={filteredData}
+					data={filteredTickets}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => <TicketListItem ticket={item} />}
 					ListEmptyComponent={() => (
 						<Text className="font-bold">No tickets</Text>
 					)}
-					onRefresh={() => ticketsQuery.refetch()}
-					refreshing={ticketsQuery.isFetching}
+					onRefresh={() => refetch()}
+					refreshing={isFetching}
 					className="flex flex-1 w-full"
 				/>
 			) : null}
