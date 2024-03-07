@@ -20,6 +20,7 @@ const SignIn = () => {
 	} = useForm<LoginDataInterface>({
 		defaultValues: {
 			login: '',
+			password: '',
 		},
 	});
 
@@ -29,7 +30,7 @@ const SignIn = () => {
 				`${process.env.EXPO_PUBLIC_API_URL}scanner/auth`,
 				{
 					method: 'POST',
-					body: JSON.stringify({ name: data.login }),
+					body: JSON.stringify({ login: data.login, password: data.password }),
 					headers: {
 						'Content-Type': 'application/json',
 					},
@@ -57,9 +58,10 @@ const SignIn = () => {
 	});
 
 	const onSubmit = handleSubmit((data) => {
-		const { login } = data;
+		const { login, password } = data;
 		loginScanner.mutate({
 			login,
+			password,
 		});
 	});
 
@@ -75,13 +77,32 @@ const SignIn = () => {
 						placeholder="Login"
 						onBlur={onBlur}
 						onChangeText={onChange}
-						className="border rounded-md p-3 py-2 w-[90%]"
+						className="border rounded-md p-3 py-2 w-[90%] my-2"
 						value={value}
 					/>
 				)}
 				name="login"
 			/>
 			{errors.login && <Text>{errors.login.message}</Text>}
+
+			<Controller
+				control={control}
+				rules={{
+					required: true,
+				}}
+				render={({ field: { onChange, onBlur, value } }) => (
+					<TextInput
+						secureTextEntry
+						placeholder="**********"
+						onBlur={onBlur}
+						onChangeText={onChange}
+						className="border rounded-md p-3 py-2 w-[90%] my-2"
+						value={value}
+					/>
+				)}
+				name="password"
+			/>
+			{errors.password && <Text>{errors.password.message}</Text>}
 
 			<Button onPress={onSubmit} label="Sign In" className="rounded-md" />
 		</View>

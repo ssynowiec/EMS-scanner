@@ -4,9 +4,11 @@ import { useStorageState } from './useStorageState';
 
 export interface LoginDataInterface {
 	login: string;
+	password: string;
 }
 
-interface ScannerDataInterface extends LoginDataInterface {
+interface ScannerDataInterface {
+	login: string;
 	eventId: string;
 }
 
