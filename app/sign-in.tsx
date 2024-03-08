@@ -46,11 +46,15 @@ const SignIn = () => {
 			return await res.json();
 		},
 		onSuccess: (data) => {
-			signIn({ login: data.name, eventId: data.event.id });
+			signIn({ login: data.login, eventId: data.event.id });
 			router.replace('/');
 		},
 		onError: (error) => {
 			setError('login', {
+				type: 'manual',
+				message: error.message,
+			});
+			setError('password', {
 				type: 'manual',
 				message: error.message,
 			});
@@ -83,7 +87,7 @@ const SignIn = () => {
 				)}
 				name="login"
 			/>
-			{errors.login && <Text>{errors.login.message}</Text>}
+			{errors.login && <Text className="my-2">{errors.login.message}</Text>}
 
 			<Controller
 				control={control}
@@ -102,9 +106,11 @@ const SignIn = () => {
 				)}
 				name="password"
 			/>
-			{errors.password && <Text>{errors.password.message}</Text>}
+			{errors.password && (
+				<Text className="my-2">{errors.password.message}</Text>
+			)}
 
-			<Button onPress={onSubmit} label="Sign In" className="rounded-md" />
+			<Button onPress={onSubmit} label="Sign In" className="rounded-md my-2" />
 		</View>
 	);
 };
